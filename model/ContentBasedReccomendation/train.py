@@ -50,7 +50,7 @@ for i in range(3,len(argv),2):
         epochs = argv[i+1]
     if flag == 'lr':
         epochs = argv[i+1]
-    if flag == '-batch_siz':
+    if flag == '-batch_size':
         epochs = argv[i+1]
     if flag == '-epochs':
         epochs = argv[i+1]
