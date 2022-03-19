@@ -136,4 +136,4 @@ optimizer = torch.optim.Adam(model.parameters(), lr=2e-6)
 
 train(model, train_dataset, test_dataset, 4, 4, optimizer)
 
-torch.save(model, output)
+torch.save(model, dest)
