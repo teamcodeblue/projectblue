@@ -103,8 +103,8 @@ def train(model, train_dataset, test_dataset, batch_size, epochs, optimizer):
 
       train_total_loss += loss.item()
       
-      test_total_correct = torch.sum(torch.argmax(output, dim=1) == label).item()
-    print(' Training Loss: ', train_total_loss, 'Traing Accuracy:', train_total_correct / len(test_dataset))
+      train_total_correct = torch.sum(torch.argmax(output, dim=1) == label).item()
+    print(' Training Loss: ', train_total_loss, 'Traing Accuracy:', train_total_correct / len(teain_dataset))
     
     test_total_loss = 0
     test_total_correct = 0
