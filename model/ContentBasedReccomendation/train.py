@@ -67,8 +67,8 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 class BBCDataset(torch.utils.data.Dataset):
   def __init__(self, df):
     #labels_arr = [labels[label] for label in df['Category']]
-    self.labels = [labels[label] for label in df['Category']]
-    self.texts = [tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt") for text in df['Text']]
+    self.labels = [labels[label] for label in df['category']]
+    self.texts = [tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt") for text in df['text']]
   
   def __len__(self):
     return len(self.texts)
