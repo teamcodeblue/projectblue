@@ -67,8 +67,8 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 class BBCDataset(torch.utils.data.Dataset):
   def __init__(self, df):
     #labels_arr = [labels[label] for label in df['Category']]
-    self.labels = [labels[label] for label in df['Category']]
-    self.texts = [tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt") for text in df['Text']]
+    self.labels = [labels[label] for label in df['category']]
+    self.texts = [tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt") for text in df['text']]
   
   def __len__(self):
     return len(self.texts)
@@ -91,6 +91,7 @@ def train(model, train_dataset, test_dataset, batch_size, epochs, optimizer):
     train_total_correct = 0
     print('Epoch: ', epoch + 1)
     for input, label in tqdm(train_loader):
+      label = label.type(torch.LongTensor)
       label = label.to(device)
 
       output = model(input['input_ids'].squeeze(1).to(device), input['attention_mask'].to(device))
@@ -104,12 +105,13 @@ def train(model, train_dataset, test_dataset, batch_size, epochs, optimizer):
       train_total_loss += loss.item()
       
       train_total_correct = torch.sum(torch.argmax(output, dim=1) == label).item()
-    print(' Training Loss: ', train_total_loss, 'Traing Accuracy:', train_total_correct / len(teain_dataset))
+    print(' Training Loss: ', train_total_loss, 'Traing Accuracy:', train_total_correct / len(train_dataset))
     
     test_total_loss = 0
     test_total_correct = 0
     with torch.no_grad():
       for input, label in tqdm(test_loader):
+        label = label.type(torch.LongTensor)
         label = label.to(device)
 
         output = model(input['input_ids'].squeeze(1).to(device), input['attention_mask'].to(device))

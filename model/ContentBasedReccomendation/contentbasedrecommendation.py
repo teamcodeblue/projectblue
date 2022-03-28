@@ -34,3 +34,6 @@ class SimpleContentBasedRecommender(FeatureExtractor):
         scores = torch.matmul(target, features.T)
         return scores
         
+
+if __name__ == '__main__':
+    FeatureExtractor()
