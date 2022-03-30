@@ -42,8 +42,8 @@ async function postData(url = '127.0.0.1:30009/api/extension_post', data = {}) {
 
 postData('http://127.0.0.1:30009/api/extension_post', { answer: 42 })
 
-  .then(data.json() => {
-    console.log(data.json()); // JSON data parsed by `data.json()` call
+  .then(data => {
+    console.log(data); // JSON data parsed by `data.json()` call
   });}
   })
   chrome.tabs.onRemoved.addListener(function(tabid, removed) {
