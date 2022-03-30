@@ -18,11 +18,12 @@ def hello_world():
 
    collection = db["test_collection"]
 
-   example = {"id": 0, "Body": {"url": "www.nike.com", "content": "Sports Wear"}}
+   example = {request.data}
 
    collection.insert_one(example)
    return
 
 if __name__ == '__main__':
    app.run(port=30009)
+
 
