@@ -1,13 +1,15 @@
 #FLASK SERVER
 from flask import Flask
 from flask_cors import CORS
+from flask import request
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/api/extension_post')
+@app.route('/api/extension_post',methods = ['GET', 'POST'])
 def hello_world():
+   print(request.data)
    import pymongo
 
    client = pymongo.MongoClient(
@@ -23,3 +25,4 @@ def hello_world():
 
 if __name__ == '__main__':
    app.run(port=30009)
+
