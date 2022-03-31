@@ -10,17 +10,18 @@ CORS(app)
 
 @app.route('/api/extension_post', methods=['GET', 'POST'])
 def hello_world():
-    schema = {'name': {'type': 'string'}}
+    schema = {'url': {'type': 'string'}}
+    #place holder
     v = Validator()
     example = json.loads(request.data)
     print(v.validate(example, schema))
     if v.validate(example, schema):
         import pymongo
         client = pymongo.MongoClient(
-            "mongodb+srv://projectcodeblue:1234@pcb-23.spovi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+            "mongodb://127.0.0.1:27017/")
         db = client["test_database"]
         collection = db["test_collection"]
-        collection.insert_one(request.data)
+        collection.insert_one(example)
 
     return
 

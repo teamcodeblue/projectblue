@@ -6,3 +6,14 @@
     "body content" : "I am a webpage google.com"
   }
 }
+
+
+schema = {
+        'header':
+            {
+                'timestamp': {'type': 'string'}
+            },
+        'body': {
+            'body content': {'type': 'string'}
+        }
+    }
