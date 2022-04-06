@@ -62,7 +62,7 @@ if __name__ == '__main__':
     from bs4 import BeautifulSoup
     import os
 
-    html = open("../RSSfuncs/scottsdummydb/bbc.html")
+    html = open("../RSSfuncs/scottsdummydb/reddit.html")
     soup = BeautifulSoup(html, features="html.parser")
 
     # kill all script and style elements
