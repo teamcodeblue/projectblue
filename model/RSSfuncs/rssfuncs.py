@@ -42,7 +42,6 @@ print(text)
 
 
 for feed in feeds:
-    break
     NewsFeed = feedparser.parse(feed)
     for entry in NewsFeed.entries:
         print(entry["title_detail"])
