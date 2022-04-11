@@ -2,6 +2,8 @@ import torch
 from transformers import BertTokenizer
 from torch import nn
 from model_defs import ArticleClassifier
+import pymongo
+import json
 
 class FeatureExtractor():
     def __init__(self, path, device='cpu'):
@@ -38,6 +40,9 @@ class SimpleContentBasedRecommender(FeatureExtractor):
 
 
 if __name__ == '__main__':
+
+
+
     import feedparser
 
     val1 = 1
@@ -56,13 +61,22 @@ if __name__ == '__main__':
              "https://www.yahoo.com/news/rss",
              "https://www.latimes.com/local/rss2.0.xml",
              "http://feeds.feedburner.com/breitbart"]
-    dirty_train = {"bbc.html": val1, "nvidia.html": val2, "reddit.html": val3}
+
+    client = pymongo.MongoClient(
+        "mongodb://127.0.0.1:27017/")
+    db = client["test_database"]
+    collection = db["test_collection"]
+    #collection.delete_many({})
+
+    #collection.insert_one({"url": "bbc.html", "html": str(open("../RSSfuncs/scottsdummydb/bbc.html").read())})
+
+    query   = collection.find_one({"url":"bbc.html"})["html"]
+    #print(query)
 
     from urllib.request import urlopen
     from bs4 import BeautifulSoup
     import os
-
-    html = open("../RSSfuncs/scottsdummydb/reddit.html")
+    html = query
     soup = BeautifulSoup(html, features="html.parser")
 
     # kill all script and style elements
@@ -79,7 +93,7 @@ if __name__ == '__main__':
     # drop blank lines
     text = '\n'.join(chunk for chunk in chunks if chunk)
 
-    #print(text)
+    print(text)
     #
 
 
@@ -87,7 +101,11 @@ if __name__ == '__main__':
     FE.addInteracted(text)
     for feed in feeds:
         NewsFeed = feedparser.parse(feed)
+        val = 0
+        minima  = 1000
         for entry in NewsFeed.entries:
-            print(entry["title_detail"])
-            print( FE.reccommend(entry["title_detail"]["value"]))
-
+            #print(entry["title_detail"])
+            val = FE.reccommend(entry["title_detail"]["value"]).detach().numpy()[0][0]
+            if  val < minima:
+                print(val, entry["title_detail"]["value"])
+                minima = val

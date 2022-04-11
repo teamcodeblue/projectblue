@@ -20,7 +20,7 @@ def hello_world():
          "mongodb://127.0.0.1:27017/")
       db = client["test_database"]
       collection = db["test_collection"]
-      collection.insert_one({"url":json.dumps(example)})
+      collection.insert_one({"url":json.dumps(example),"html" : str(open("model/RSSfuncs/scottsdummydb/reddit.html").read())})
 
    return "a"
 
