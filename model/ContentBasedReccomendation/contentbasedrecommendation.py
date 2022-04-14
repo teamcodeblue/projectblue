@@ -39,10 +39,7 @@ class SimpleContentBasedRecommender(FeatureExtractor):
 
 
 
-if __name__ == '__main__':
-
-
-
+def reccomendations():
     import feedparser
 
     val1 = 1
@@ -109,3 +106,4 @@ if __name__ == '__main__':
             if  val < minima:
                 print(val, entry["title_detail"]["value"])
                 minima = val
+    return ""

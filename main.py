@@ -3,6 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask import request
 import json
+from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
 
 app = Flask(__name__)
 CORS(app)
@@ -23,6 +24,10 @@ def hello_world():
       collection.insert_one({"url":json.dumps(example),"html" : str(open("model/RSSfuncs/scottsdummydb/reddit.html").read())})
 
    return "a"
+
+@app.route('/api/reccomendations_request',methods = ['GET', 'POST'])
+def post_reccomendations():
+   return reccomendations()
 
 
 if __name__ == '__main__':
