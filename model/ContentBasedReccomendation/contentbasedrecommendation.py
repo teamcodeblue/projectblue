@@ -34,5 +34,5 @@ class SimpleContentBasedRecommender(FeatureExtractor):
 
     def reccommend(self, data):
         data /= np.sum(data, dim=1)
-        return self.features * weights @ data.T
+        return np.sum(self.features * weights @ data.T, dim=0)
         
