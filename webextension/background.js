@@ -1,7 +1,13 @@
-//var url_list = new Array();
+function getHTML() {
+    return document.documentElement.outerHTML;
+   }
+
 chrome.storage.sync.set({ 'state': 1 }, function () {
  
 });
+function getHTML() {
+ return document.documentElement.outerHTML;
+}
 const url_map = new Map();
 const time_map = new Map();
 const data_map = new Map();
@@ -19,37 +25,48 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
 
        }
       });
+
+
+      //getting html
+      chrome.scripting.executeScript(
+        {
+          target: {tabId: tabId},
+          func: getHTML,
+        },
+        (html_file) => {
+          
+            console.log(html_file);
+        });
+
+
      // Example POST method implementation:
 async function postData(url = '127.0.0.1:30009/api/extension_post', data = {}) {
   // Default options are marked with *
+
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept' : 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
+    body: JSON.stringify({'url': (tab.url).toString(),'html': getHTML()}) // body data type must match "Content-Type" header
   });
+  console.log(tab.url);
   return response.json(); // parses JSON response into native JavaScript objects
+
 }
 
 postData('http://127.0.0.1:30009/api/extension_post', { answer: 42 })
+
   .then(data => {
     console.log(data); // JSON data parsed by `data.json()` call
-  });
-
-        
-
-      
-     
-   
-  
-    }
+  });}
   })
   chrome.tabs.onRemoved.addListener(function(tabid, removed) {
    // console.log(tabid);
@@ -69,4 +86,3 @@ postData('http://127.0.0.1:30009/api/extension_post', { answer: 42 })
     console.log(data_map);}}
    })
   })
-

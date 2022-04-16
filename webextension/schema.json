@@ -2,7 +2,7 @@
   {
     "timestamp": "datetime etc"
   },
-  "body": {
-    "body content" : "I am a webpage google.com"
+  "html": {
+    "htmlcontent" : "I am a webpage google.com"
   }
 }
