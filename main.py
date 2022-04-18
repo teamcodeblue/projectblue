@@ -12,6 +12,7 @@ CORS(app)
 @app.route('/api/extension_post',methods = ['GET', 'POST'])
 def hello_world():
    import pymongo
+   print(request.data)
    schema = {'url': {'type': 'string'}}
 
    example = json.loads(request.data)
