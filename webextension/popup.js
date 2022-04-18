@@ -1,7 +1,3 @@
-
-
-
-
 // When the button is clicked
 document.addEventListener('DOMContentLoaded', function () {
   var checkbox = document.querySelector('input[type="checkbox"]');
@@ -10,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     checkbox.checked= result.state;
   });
   checkbox.addEventListener('click', function () {
-      
-    
+
+
     chrome.storage.sync.get(['state'], function(result) {
       //console.log('state currently is ' + result.state);
       if(result.state)
@@ -58,6 +54,3 @@ async function postData(url = '127.0.0.1:30009/api/extension_post', data = {}) {
 
   rec_text.innerHTML =data.text
 });
-
-
-

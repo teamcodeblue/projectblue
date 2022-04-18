@@ -1,9 +1,10 @@
 import torch
 from transformers import BertTokenizer
 from torch import nn
-from model_defs import ArticleClassifier
+#from model_defs import ArticleClassifier
 import pymongo
 import json
+
 
 class FeatureExtractor():
     def __init__(self, path, device='cpu'):
@@ -13,18 +14,20 @@ class FeatureExtractor():
 
     def extract_features(self, text):
         text = str(text)
-        embeded = self.tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt")
+        embeded = self.tokenizer(text, padding='max_length', max_length=512, truncation=True, return_tensors="pt")
         output = self.model(embeded['input_ids'], embeded['attention_mask'])
         return output
+
     def categorize(self, text):
         return torch.argmax(self.extract_features(text), dim=1)
+
+
 class SimpleContentBasedRecommender(FeatureExtractor):
     def __init__(self, path, device='cpu'):
         super(SimpleContentBasedRecommender, self).__init__(path, device='cpu')
-        self.interacted = torch.zeros(1,5)
+        self.interacted = torch.zeros(1, 5)
         self.interacted_count = 0
 
-        
     def addInteracted(self, text):
         features = self.extract_features(text)
         self.interacted += features
@@ -36,7 +39,6 @@ class SimpleContentBasedRecommender(FeatureExtractor):
         features = self.extract_features(data)
         scores = torch.matmul(target, features.T)
         return scores
-
 
 
 def reccomendations():
@@ -63,12 +65,12 @@ def reccomendations():
         "mongodb://127.0.0.1:27017/")
     db = client["test_database"]
     collection = db["test_collection"]
-    #collection.delete_many({})
+    # collection.delete_many({})
 
-    #collection.insert_one({"url": "bbc.html", "html": str(open("../RSSfuncs/scottsdummydb/bbc.html").read())})
+    # collection.insert_one({"url": "bbc.html", "html": str(open("../RSSfuncs/scottsdummydb/bbc.html").read())})
 
-    query   = collection.find_one({"url":"bbc.html"})["html"]
-    #print(query)
+    query = collection.find_one({"url": "bbc.html"})["html"]
+    # print(query)
 
     from urllib.request import urlopen
     from bs4 import BeautifulSoup
@@ -93,17 +95,16 @@ def reccomendations():
     print(text)
     #
 
-
     FE = SimpleContentBasedRecommender("model.pt")
     FE.addInteracted(text)
     for feed in feeds:
         NewsFeed = feedparser.parse(feed)
         val = 0
-        minima  = 1000
+        minima = 1000
         for entry in NewsFeed.entries:
-            #print(entry["title_detail"])
+            # print(entry["title_detail"])
             val = FE.reccommend(entry["title_detail"]["value"]).detach().numpy()[0][0]
-            if  val < minima:
+            if val < minima:
                 print(val, entry["title_detail"]["value"])
                 minima = val
     return ""
