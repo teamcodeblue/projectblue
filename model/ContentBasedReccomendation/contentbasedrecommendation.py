@@ -107,3 +107,5 @@ def reccomendations():
                 print(val, entry["title_detail"]["value"])
                 minima = val
     return ""
+
+reccomendations()
