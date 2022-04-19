@@ -1,0 +1,14 @@
+#:kivy 2.1.0
+
+<YourWidget>
+    al : anim_label
+    AnchorLayout:
+        size: root.size
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Label:
+            id: anim_label
+            font_size: 60
+            font_name: 'ocr-a'
+            text: root.label_text
+            opacity: 0.0
