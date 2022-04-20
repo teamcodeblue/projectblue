@@ -27,7 +27,7 @@ def hello_world():
 
 @app.route('/api/reccomendations_request',methods = ['GET', 'POST'])
 def post_reccomendations():
-   ret_text = reccomendations(model_link="model/ContentBasedRecommendation/model.pt")
+   ret_text = reccomendations(model_link="model/ContentBasedRecommendation/oldmodel.pt")
    stringy = {"text" :ret_text , "count": 4}
 
    return json.dumps(stringy)

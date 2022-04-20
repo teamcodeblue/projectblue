@@ -7,26 +7,26 @@ import json
 import queue
 
 class FeatureExtractor():
-    def __init__(self, path, device='cpu'):
+    def __init__(self, path, device='cuda'):
         self.model = torch.load(path, map_location=torch.device(device))
-        self.model.eval()
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
     def extract_features(self, text):
         text = str(text)
-        embeded = self.tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt")
+        embeded = self.tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt").to("cuda")
         output = self.model(embeded['input_ids'], embeded['attention_mask'])
         return output
     def categorize(self, text):
         return torch.argmax(self.extract_features(text), dim=1)
 class SimpleContentBasedRecommender(FeatureExtractor):
     def __init__(self, path, device='cpu'):
-        super(SimpleContentBasedRecommender, self).__init__(path, device='cpu')
-        self.interacted = torch.zeros(1,5)
+        super(SimpleContentBasedRecommender, self).__init__(path, device='cuda')
+        self.interacted = torch.zeros(1,5).to("cuda")
         self.interacted_count = 0
 
         
     def addInteracted(self, text):
+        #self.model = self.model.to('cuda:0')
         features = self.extract_features(text)
         self.interacted += features
         self.interacted_count += 1
@@ -67,7 +67,7 @@ def reccomendations(model_link = "model.pt"):
     #collection.delete_many({})
 
     #collection.insert_one({"url": "bbc.html", "html": str(open("../RSSfuncs/scottsdummydb/bbc.html").read())})
-    N = 50
+    N = 2
     querys = collection.find().skip(max(0,collection.count_documents({}, skip = 0) - N))
     from bs4 import BeautifulSoup
 
@@ -104,20 +104,31 @@ def reccomendations(model_link = "model.pt"):
 
         FE = SimpleContentBasedRecommender("model/ContentBasedReccomendation/model.pt")
         FE.addInteracted(text)
+        print("done")
 
     que = []
+    minima = 1000
     for feed in feeds:
 
         NewsFeed = feedparser.parse(feed)
         val = 0
-        minima  = 1000
+
         for entry in NewsFeed.entries:
             #print(entry["title_detail"])
-            val = FE.reccommend(entry["title_detail"]["value"]).detach().numpy()[0][0]
+            val = FE.reccommend(entry["title_detail"]["value"]).cpu().detach().numpy()[0][0]
             if  val < minima:
-                que.append(entry["title_detail"]["value"])
+                if "content" in entry:
+                    for c in entry["content"]:
+                        if "link" in str(c):
+                            que.append(str(entry["title_detail"]["value"]) + str(c['value']) + "\n")
 
-                print(val, entry["title_detail"]["value"])
+
+                else:
+                    que.append(str(entry["title_detail"]["value"]) + str(entry["title_detail"]["base"]) + "\n")
+
+                print(val, (entry["title_detail"]["value"]))
                 minima = val
+
+    print(que)
     return que[max(0,len(que)-5):]
 
