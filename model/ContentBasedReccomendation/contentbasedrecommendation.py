@@ -2,6 +2,7 @@ import torch
 from transformers import BertTokenizer
 from torch import nn
 from model_defs import ArticleClassifier
+import numpy as np
 
 class FeatureExtractor():
     def __init__(self, path, device='cpu'):
@@ -16,23 +17,24 @@ class FeatureExtractor():
     def categorize(self, text):
         return torch.argmax(self.extract_features(text), dim=1)
 class SimpleContentBasedRecommender(FeatureExtractor):
-    def __init__(self, path, device='cpu'):
+    def __init__(self, path, texts , weights, device='cpu'):
         super(SimpleContentBasedRecommender, self).__init__(path, device='cpu')
-        self.interacted = torch.zeros(1,5)
-        self.interacted_count = 0
+        self.target = self.set_target(texts, weights)
 
         
-    def addInteracted(self, text):
-        features = self.extract_features(text)
-        self.interacted += features
-        self.interacted_count += 1
+    def set_target(self, texts , weights):
+        self.features = self.extract_features(text).numpy()
+        #normalize
+        self.features /= np.sum(self.features, dim=1)
+        self.weights = weights
+    def append(self, texts, weights):
+        toAdd = self.extract_features(text).numpy()
+        toAdd /= np.sum(toAdd, dim=1)
+        np.append(self.features, toAdd, dim=0)
 
-    def reccommend(self, data, target=None):
-        if target is None:
-            target = self.interacted / self.interacted_count
-        features = self.extract_features(data)
-        scores = torch.matmul(target, features.T)
-        return scores
+    def reccommend(self, data):
+        data /= np.sum(data, dim=1)
+        return np.sum(self.features * weights @ data.T, dim=1)
         
 
 if __name__ == '__main__':
