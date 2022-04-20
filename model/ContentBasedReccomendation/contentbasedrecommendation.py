@@ -1,9 +1,10 @@
 import torch
 from transformers import BertTokenizer
 from torch import nn
-from model_defs import ArticleClassifier
+from model.ContentBasedReccomendation.model_defs import ArticleClassifier
 import pymongo
 import json
+import queue
 
 class FeatureExtractor():
     def __init__(self, path, device='cpu'):
@@ -39,7 +40,7 @@ class SimpleContentBasedRecommender(FeatureExtractor):
 
 
 
-def reccomendations():
+def reccomendations(model_link = "model.pt"):
     import feedparser
 
     val1 = 1
@@ -66,37 +67,47 @@ def reccomendations():
     #collection.delete_many({})
 
     #collection.insert_one({"url": "bbc.html", "html": str(open("../RSSfuncs/scottsdummydb/bbc.html").read())})
-
-    query   = collection.find_one({"url":"bbc.html"})["html"]
-    #print(query)
-
-    from urllib.request import urlopen
+    N = 50
+    querys = collection.find().skip(max(0,collection.count_documents({}, skip = 0) - N))
     from bs4 import BeautifulSoup
-    import os
-    html = query
-    soup = BeautifulSoup(html, features="html.parser")
 
-    # kill all script and style elements
-    for script in soup(["script", "style"]):
-        script.extract()  # rip it out
+    for n in range(N):
+        try:
+            query   = querys[n]
+            #print(query)
+        except IndexError:
+            break
 
-    # get text
-    text = soup.get_text()
+        from urllib.request import urlopen
+        import os
+        html = str(query)
 
-    # break into lines and remove leading and trailing space on each
-    lines = (line.strip() for line in text.splitlines())
-    # break multi-headlines into a line each
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    # drop blank lines
-    text = '\n'.join(chunk for chunk in chunks if chunk)
+        soup = BeautifulSoup(html, features="html.parser")
 
-    print(text)
-    #
+        # kill all script and style elements
+        for script in soup(["script", "style"]):
+            script.extract()  # rip it out
+
+        # get text
+        text = soup.get_text()
+
+        # break into lines and remove leading and trailing space on each
+        lines = (line.strip() for line in text.splitlines())
+        # break multi-headlines into a line each
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        # drop blank lines
+        text = '\n'.join(chunk for chunk in chunks if chunk)
+
+        #print(text)
+        #
 
 
-    FE = SimpleContentBasedRecommender("model.pt")
-    FE.addInteracted(text)
+        FE = SimpleContentBasedRecommender("model/ContentBasedReccomendation/model.pt")
+        FE.addInteracted(text)
+
+    que = []
     for feed in feeds:
+
         NewsFeed = feedparser.parse(feed)
         val = 0
         minima  = 1000
@@ -104,8 +115,9 @@ def reccomendations():
             #print(entry["title_detail"])
             val = FE.reccommend(entry["title_detail"]["value"]).detach().numpy()[0][0]
             if  val < minima:
+                que.append(entry["title_detail"]["value"])
+
                 print(val, entry["title_detail"]["value"])
                 minima = val
-    return ""
+    return que[max(0,len(que)-5):]
 
-reccomendations()
