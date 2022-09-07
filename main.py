@@ -4,7 +4,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask import request, Response
 import json
-from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
+#from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
 
 app = Flask(__name__)
 CORS(app)

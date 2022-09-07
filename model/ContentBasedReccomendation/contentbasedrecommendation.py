@@ -1,7 +1,7 @@
 import torch
 from transformers import BertTokenizer
 from torch import nn
-#from model_defs import ArticleClassifier
+from model_defs import ArticleClassifier
 import pymongo
 import json
 
@@ -69,7 +69,7 @@ def reccomendations():
 
     # collection.insert_one({"url": "bbc.html", "html": str(open("../RSSfuncs/scottsdummydb/bbc.html").read())})
 
-    query = collection.find_one({"url": "bbc.html"})["html"]
+    query = collection.find_one({"url": "https://www.reddit.com/r/playboicarti/comments/u5wwx9/like_7_people_showed_up_to_smokepurpps_concert/"})["html"]
     # print(query)
 
     from urllib.request import urlopen
