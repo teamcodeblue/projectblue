@@ -1,21 +1,27 @@
 body {
+    background-color:black;
     width: 340px;
     font-size: 20px;
     margin:5px;
 }
 
+
+
 h1 {
+    color: white;
     font-size: 15px;
     margin-top: 10px;
     margin-left: 15px;
 }
 
+
 header{
-    background-color:white;
+    background-color:black;
 }
 
+
 main{
-    background-color:whitesmoke;
+    background-color:black;
 }
 
 .container {
@@ -47,7 +53,7 @@ main{
 }
 
 h2 {
-    color: black;
+    color: white;
     font-size: 12px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -57,7 +63,7 @@ h2 {
 
 #page-status h3 {
     margin: 0;
-    color: black;
+    color: white;
     font-size:14px;
 }
 
@@ -66,5 +72,11 @@ h2 {
 }
 
 #rec_text{
-    font-size:12px
+    font-size:12px;
+    color: white;
+}
+
+p
+{
+    color : white;
 }
