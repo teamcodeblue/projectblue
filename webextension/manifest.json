@@ -7,6 +7,7 @@
     "service_worker": "background.js"
   },
   "permissions": ["tabs", "storage","scripting"],
+  "host_permissions": ["https://*/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -16,5 +17,5 @@
       "128": "/images/get_started128.png"
     }
   }
-  
+
 }
