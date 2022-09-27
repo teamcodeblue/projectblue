@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="button.css">
-  </head>
+    <link rel="stylesheet" href="popup.css">
+</head>
   <body>
-   
-    <div>
-      <label class="switch"><input type="checkbox" id="changeState">
-        
-          <div class="slider round"></div>
-      </label>
-  </div>
-    <div>
-      <button id="rec_button"></button>
-    <label id="rec_text">
-      Press button to bring up recommendations
-    </label>
-  </div>
-    <script src="popup.js"></script>
+      <header>
+          <div class="container">
+              <div class="image">
+                  <img src="image/projectcodeblue.jpg" width="33" height="33" />
+              </div>
+              <div class="text" >
+                  <h1>Welcome to project code blue</h1>
+              </div>
+          </div>
+      </header>
+      <main>
+          <div id="page-status">
+              <h2>Data collecting on</h2>
+              <h3>Current website: </h3>
+              <div class="container">
+                  <div class="current">
+                      <p>currentwebsite.com</p>
+                  </div>
+                  <label class="switch">
+                      <input type="checkbox" id="changeState">
 
+                      <div class="slider round"></div>
+                  </label>
+              </div>
+          </div>
+          <div id="page-control">
+              <div class="col-md-12 text-center">
+                  <button type="button" class="btn btn-primary">recommend</button>
+                  <label id="rec_text">
+                      Press button to bring up recommendations
+                  </label>
+              </div>
+          </div>
+          <div id="page-result">
+              <h id="h1"> Nothing yet! </h>
+              <script src="popup.js"></script>
+          </div>
+      </main>
   </body>
-
 </html>

@@ -1,7 +1,3 @@
-
-
-
-
 // When the button is clicked
 document.addEventListener('DOMContentLoaded', function () {
   var checkbox = document.querySelector('input[type="checkbox"]');
@@ -10,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     checkbox.checked= result.state;
   });
   checkbox.addEventListener('click', function () {
-      
-    
+
+
     chrome.storage.sync.get(['state'], function(result) {
       //console.log('state currently is ' + result.state);
       if(result.state)
@@ -25,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
-let rec_button = document.getElementById("rec_button");
+let rec_button = document.getElementById("btn btn-primary");
 let rec_text = document.getElementById("rec_text");
 
 // chrome.storage.sync.get("color", ({ color }) => {
@@ -54,10 +50,7 @@ async function postData(url = '127.0.0.1:30009/api/extension_post', data = {}) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
   let data = await postData('http://127.0.0.1:30009/api/reccomendations_request', { answer: 42 })
-  console.log(data)
+  alert(data.text);
 
   rec_text.innerHTML =data.text
 });
-
-
-
