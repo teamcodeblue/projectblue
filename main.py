@@ -6,6 +6,7 @@ from flask import request, Response
 import json
 from model.ContentBasedReccomendation.model_defs import ArticleClassifier
 
+from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
 app = Flask(__name__)
 CORS(app)
 
@@ -16,15 +17,15 @@ def hello_world():
     import pymongo
     schema = {'url': {'type': 'string', 'empty': False}, 'timeSpend': {'type': 'float', 'empty': False}, 'html': {'type': 'string', 'empty': False}}
     v = Validator(schema)
+
     example = json.loads(request.data)
-    if v.validate(example, schema):
+    if True:  # v.validate(example, schema):
         client = pymongo.MongoClient(
             "mongodb://127.0.0.1:27017/")
         db = client["test_database"]
         collection = db["test_collection"]
-        collection.insert_one(example)
-
-    return "a"
+        collection.insert_one({"url": example["url"], "html": example["html"]})
+    return {"Status": "200"}
 
 
 @app.route('/api/reccomendations_request', methods=['GET', 'POST'])

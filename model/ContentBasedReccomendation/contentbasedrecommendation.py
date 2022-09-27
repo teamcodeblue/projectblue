@@ -7,21 +7,21 @@ import json
 import queue
 
 class FeatureExtractor():
-    def __init__(self, path, device='cuda'):
+    def __init__(self, path, device='cpu'):
         self.model = torch.load(path, map_location=torch.device(device))
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 
     def extract_features(self, text):
         text = str(text)
-        embeded = self.tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt").to("cuda")
+        embeded = self.tokenizer(text, padding='max_length', max_length = 512, truncation=True, return_tensors="pt")
         output = self.model(embeded['input_ids'], embeded['attention_mask'])
         return output
     def categorize(self, text):
         return torch.argmax(self.extract_features(text), dim=1)
 class SimpleContentBasedRecommender(FeatureExtractor):
     def __init__(self, path, device='cpu'):
-        super(SimpleContentBasedRecommender, self).__init__(path, device='cuda')
-        self.interacted = torch.zeros(1,5).to("cuda")
+        super(SimpleContentBasedRecommender, self).__init__(path, device='cpu')
+        self.interacted = torch.zeros(1,5).to("cpu")
         self.interacted_count = 0
 
         
@@ -46,19 +46,7 @@ def reccomendations(model_link = "model.pt"):
     val1 = 1
     val2 = 15
     val3 = 45
-    feeds = ["https://www.reddit.com/r/tech.rss",
-             "https://www.reddit.com/r/SkincareAddiction.rss",
-             "https://www.reddit.com/r/Fishing.rss",
-             "http://rss.cnn.com/rss/cnn_topstories.rss",
-             "https://www.nytimes.com/services/xml/rss/nyt/HomePage.xml",
-             "https://www.huffpost.com/section/front-page/feed?x=1",
-             "http://feeds.foxnews.com/foxnews/latest",
-             "http://rssfeeds.usatoday.com/UsatodaycomNation-TopStories",
-             "https://feeds.npr.org/1001/rss.xml",
-             "https://www.politico.com/rss/politicopicks.xml",
-             "https://www.yahoo.com/news/rss",
-             "https://www.latimes.com/local/rss2.0.xml",
-             "http://feeds.feedburner.com/breitbart"]
+    feeds = ["https://www.reddit.com/r/tech.rss"]
 
     client = pymongo.MongoClient(
         "mongodb://127.0.0.1:27017/")

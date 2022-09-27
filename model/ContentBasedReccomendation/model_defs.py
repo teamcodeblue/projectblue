@@ -6,7 +6,7 @@ from transformers import BertModel
 class ArticleClassifier(nn.Module):
     def __init__(self, dropout=0.5):
         super(ArticleClassifier, self).__init__()
-        self.bert = BertModel.from_pretrained('bert-base-cased').to("cuda:0")
+        self.bert = BertModel.from_pretrained('bert-base-cased')
         self.dropout = nn.Dropout(dropout)
         self.linear = nn.Linear(768, 5)
         self.relu = nn.ReLU()
