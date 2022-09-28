@@ -76,7 +76,12 @@ h2 {
     color: white;
 }
 
-p
-{
-    color : white;
+current {
+    justify-content: center;
+}
+
+#current_URL {
+    font-size: 16px;
+    color: white;
+    justify-content: center;
 }

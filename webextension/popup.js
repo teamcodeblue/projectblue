@@ -5,6 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     checkbox.checked= result.state;
   });
+
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+        let url = tabs[0].url;
+        let current_URL = document.getElementById("current_URL");
+        var regex = /\/\/([^\/,\s]+\.[^\/,\s]+?)(?=\/|,|\s|$|\?|#)/g;
+        match = regex.exec(url);
+        current_URL.innerHTML = match[1];
+    });
   checkbox.addEventListener('click', function () {
 
 
