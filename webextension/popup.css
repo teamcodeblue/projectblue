@@ -44,7 +44,7 @@ main{
 }
 
 .switch {
-    margin-left: 80px;
+    margin-left: 170px;
 }
 
 .vertical {
@@ -84,4 +84,11 @@ current {
     font-size: 16px;
     color: white;
     justify-content: center;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
