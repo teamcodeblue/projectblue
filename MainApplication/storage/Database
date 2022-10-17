@@ -1,0 +1,7 @@
+ID: projectcodeblue
+PW: 1234
+
+pip install pymongo[srv]
+
+if anyone has problem installing the above command:
+https://stackoverflow.com/questions/36835341/pip-is-not-recognized
