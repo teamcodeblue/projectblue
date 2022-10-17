@@ -4,9 +4,12 @@ from flask import Flask
 from flask_cors import CORS
 from flask import request, Response
 import json
-from model.ContentBasedReccomendation.model_defs import ArticleClassifier
+from MainApplication.model.ContentBasedReccomendation.model_defs import ArticleClassifier
+from torch import nn
+import tqdm
 
-from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
+
+from MainApplication.model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
 app = Flask(__name__)
 CORS(app)
 
