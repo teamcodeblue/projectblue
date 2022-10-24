@@ -60,6 +60,7 @@ def reccomendations(model_link = "model.pt"):
     from bs4 import BeautifulSoup
 
     for n in range(N):
+        #update stream with new value of n
         try:
             query   = querys[n]
             #print(query)

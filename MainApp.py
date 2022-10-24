@@ -4,7 +4,7 @@ Config.set('graphics', 'resizable', False) # Static window size
 Config.set('kivy','window_icon','assets\Logo.ico') # Windows Window Icon
 
 # Windows (OS) mouse cursor
-from ctypes import windll
+#from ctypes import windll
 
 # Kivy Dependencies
 from kivy.app import App
