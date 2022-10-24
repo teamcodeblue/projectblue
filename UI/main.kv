@@ -1,23 +1,41 @@
 #:kivy 2.1.0
 
-<YourWidget>
-    al : anim_label
-    AnchorLayout:
-        size: root.size
-        anchor_x: 'center'
-        anchor_y: 'center'
-        Label:
-            id: anim_label
-            font_size: 60
-            font_name: 'ocr-a'
-            text: root.label_text
-            opacity: 0.0
-    AnchorLayout:
-        size: root.size
-        anchor_x: 'left'
-        anchor_y: 'bottom'
+<RootWidget> 
+    canvas:
+        Color:
+            rgba : 40/255, 113/255, 199/255, 1
+        
+        Rectangle: 
+            pos: 75, 100
+            size: 7.5, 110
+        
+        Rectangle:
+            pos: 790, 0
+            size: 60, 250
+    
+    CycleLabel:
+        id: c_label
+    
+    Button:
+        pos: 800, 154
+        size: 40, 40
+        background_color: 0,0,0,0
+        id: settings_button
+        Image: 
+            source: 'assets/cog.png'
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
 
+    Button:
+        pos: 800, 56
+        size: 40, 40
+        background_color: 0,0,0,0
+        on_release: root.status_released()
+        id: status_button
         Image:
-            source: 'assets/Logo.png'
-            size_hint: None, None
-            size:50,50
+            id: status_image
+            source: 'assets/play.png'
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+    ProgressMeter:
+        id: p_bar
