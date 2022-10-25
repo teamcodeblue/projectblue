@@ -28,6 +28,9 @@ from ModelController import model_main
 WINDOW_WIDTH = 850
 WINDOW_HEIGHT = 250
 
+#test dep
+from model.ContentBasedReccomendation.model_defs import ArticleClassifier
+
 
 # Root widget of application (will be parent of all others (container))
 class RootWidget(Widget):
@@ -67,7 +70,7 @@ class MainApp(App):
         self.thread_event = Clock.schedule_interval(partial(self.thread_anim, self.thread), 7.5)
 
         # Schedule our UI updates
-        self.progress_update = Clock.schedule_interval(partial(self.progress_check), 0)
+        self.progress_update = Clock.schedule_interval(partial(self.progress_check), .1)
         return RootWidget()
 
     def thread_anim(self, thread, *args):

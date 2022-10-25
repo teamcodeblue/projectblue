@@ -4,7 +4,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask import request, Response
 import json
-#from model.ContentBasedReccomendation.model_defs import ArticleClassifier
+from model.ContentBasedReccomendation.model_defs import ArticleClassifier
 
 from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
 app = Flask(__name__)
@@ -30,7 +30,9 @@ def hello_world():
 
 @app.route('/api/reccomendations_request', methods=['GET', 'POST'])
 def post_reccomendations():
-   ret_text = reccomendations(model_link="model/ContentBasedRecommendation/oldmodel.pt")
+
+
+   ret_text = reccomendations(model_link="model/ContentBasedRecommendation/oldmodel.pt",Globals= Globals)
    stringy = {"text" :ret_text , "count": 4}
 
    return json.dumps(stringy)
@@ -52,4 +54,3 @@ class Globals(object):
 def model_main():
     app.run(port=30009)
 
-    Globals.PROGRESS
