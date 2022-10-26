@@ -24,7 +24,7 @@
               <h3>Current website: </h3>
               <div class="container">
                   <div class="current">
-                      <p>currentwebsite.com not implemented yet</p>
+                      <label id="current_URL">currentwebsite.com</label>
                   </div>
                   <label class="switch">
                       <input type="checkbox" id="changeState">
@@ -37,11 +37,22 @@
                   <button type="button" id="btn btn-primary" class="btn btn-primary">recommend</button>
                   <label id="rec_text">
                       Press button to bring up recommendations
+                      <h id="default" style="display: block"> Nothing yet!</h>
                   </label>
               </div>
           <div id="page-result">
-              <h id="h1"> Nothing yet! </h>
               <script src="popup.js"></script>
+          </div>
+          <div id="page-latest">
+              <div class="col-md-12 text-center">
+                  <button type="button" id="latest_rec_button" class="btn btn-primary">show latest</button>
+                  <div>
+                    <label id="latest_rec_text">
+                      Press button to show latest recommendation list
+                    </label>
+                    <script src="popup.js"></script>
+                  </div>
+              </div>
           </div>
       </main>
   </body>

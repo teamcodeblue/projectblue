@@ -1,10 +1,18 @@
 // When the button is clicked
+var global = "The latest recommendation list is empty :(";
 document.addEventListener('DOMContentLoaded', function () {
   var checkbox = document.querySelector('input[type="checkbox"]');
   chrome.storage.sync.get(['state'], function(result) {
 
     checkbox.checked= result.state;
   });
+  chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+        let url = tabs[0].url;
+        let current_URL = document.getElementById("current_URL");
+        var regex = /\/\/([^\/,\s]+\.[^\/,\s]+?)(?=\/|,|\s|$|\?|#)/g;
+        match = regex.exec(url);
+        current_URL.innerHTML = match[1];
+    });
   checkbox.addEventListener('click', function () {
 
 
@@ -20,9 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
   });
+
+  let latest_rec_button = document.getElementById("latest_rec_button");
+  latest_rec_button.addEventListener("click", function() {
+
+    latest_rec_text.innerHTML = global;
+  });
+
 });
 let rec_button = document.getElementById("btn btn-primary");
 let rec_text = document.getElementById("rec_text");
+let latest_rec_button = document.getElementById("latest_rec_button");
 
 // chrome.storage.sync.get("color", ({ color }) => {
 //   changeColor.style.backgroundColor = color;
@@ -52,5 +68,11 @@ async function postData(url = '127.0.0.1:30009/api/extension_post', data = {}) {
   let data = await postData('http://127.0.0.1:30009/api/reccomendations_request', { answer: 42 })
   alert(data.text);
 
-  rec_text.innerHTML =data.text
+  rec_text.innerHTML =data.text;
+
+  var blob = new Blob(["Welcome to Websparrow.org."],
+                { type: "text/plain;charset=utf-8" });
+
+  saveAs(blob, "latestRec.txt"); //FileSaver.js
+
 });
