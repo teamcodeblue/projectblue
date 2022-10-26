@@ -47,7 +47,7 @@ rec_button.addEventListener("click", async () => {
 
 async function postData(url = '127.0.0.1:30009/api/extension_post', data = {}) {
   // Default options are marked with *
-
+try{
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -64,12 +64,22 @@ async function postData(url = '127.0.0.1:30009/api/extension_post', data = {}) {
   });
   //console.log(response.json())
   return response.json(); // parses JSON response into native JavaScript objects
+  }catch(error)
+  {
+    return null;
+  }
 }
   let data = await postData('http://127.0.0.1:30009/api/reccomendations_request', { answer: 42 })
+  if(data != null)
+  {
   alert(data.text);
 
   rec_text.innerHTML =data.text;
-
+  }
+  else
+  {
+    rec_text.innerHTML = 'error, connection failed!';
+  }
   var blob = new Blob(["Welcome to Websparrow.org."],
                 { type: "text/plain;charset=utf-8" });
 
