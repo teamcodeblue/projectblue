@@ -33,11 +33,13 @@ def hello_world():
 import time
 def post_reccomendations():
     if Last_Ran and Cache_result and Last_Ran+ cache_run_time >= time.time() :
-        ret_text = reccomendations(model_link="model/ContentBasedRecommendation/oldmodel.pt")
-        stringy = {"text" :ret_text , "count": 4}
-    else:
         stringy = {"text": Cache_result, "count": 4}
         return json.dumps(stringy)
+    else:
+        Last_Ran =  time.time()
+        ret_text = reccomendations(model_link="model/ContentBasedRecommendation/oldmodel.pt")
+        stringy = {"text" :ret_text , "count": 4}
+
 
 @app.route('/api/force_reccomendations_request', methods=['GET', 'POST'])
 def force_reccomendations():
