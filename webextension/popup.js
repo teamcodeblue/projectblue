@@ -72,7 +72,6 @@ try{
   let data = await postData('http://127.0.0.1:30009/api/reccomendations_request', { answer: 42 })
   if(data != null)
   {
-  alert(data.text);
 
   rec_text.innerHTML =data.text;
   }
