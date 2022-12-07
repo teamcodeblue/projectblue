@@ -5,6 +5,7 @@ from model.ContentBasedReccomendation.model_defs import ArticleClassifier
 import pymongo
 import json
 import queue
+Cache_result = None
 
 class FeatureExtractor():
     def __init__(self, path, device='cpu'):
@@ -118,5 +119,6 @@ def reccomendations(model_link = "model.pt"):
                 minima = val
 
     print(que)
+    Cache_result = que[max(0,len(que)-5):]
     return que[max(0,len(que)-5):]
 
