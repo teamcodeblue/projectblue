@@ -30,9 +30,9 @@ def hello_world():
 
 
 @app.route('/api/reccomendations_request', methods=['GET', 'POST'])
-import time
 def post_reccomendations():
-    if Last_Ran and Cache_result and Last_Ran+ cache_run_time >= time.time() :
+    import time
+    if Last_Ran and Cache_result and Last_Ran + cache_run_time >= time.time():
         stringy = {"text": Cache_result, "count": 4}
         return json.dumps(stringy)
     else:
