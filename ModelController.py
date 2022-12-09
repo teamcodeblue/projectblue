@@ -6,21 +6,16 @@ from flask import request, Response
 import json
 from model.ContentBasedReccomendation.model_defs import ArticleClassifier
 
-cache_run_time = 30
-from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations, Cache_result
-
-Last_Ran = None
+from model.ContentBasedReccomendation.contentbasedrecommendation import reccomendations
 app = Flask(__name__)
 CORS(app)
-latestRec = None
 
 
 @app.route('/api/extension_post', methods=['GET', 'POST'])
 def hello_world():
-    # print(request.data)
+    #print(request.data)
     import pymongo
-    schema = {'url': {'type': 'string', 'empty': False}, 'timeSpend': {'type': 'float', 'empty': False},
-              'html': {'type': 'string', 'empty': False}}
+    schema = {'url': {'type': 'string', 'empty': False}, 'timeSpend': {'type': 'float', 'empty': False}, 'html': {'type': 'string', 'empty': False}}
     v = Validator(schema)
 
     example = json.loads(request.data)
@@ -35,18 +30,27 @@ def hello_world():
 
 @app.route('/api/reccomendations_request', methods=['GET', 'POST'])
 def post_reccomendations():
-    stringy = {"text": latestRec, "count": 4}
-    return json.dumps(stringy)
 
 
-@app.route('/api/force_reccomendations_request', methods=['GET', 'POST'])
-def force_reccomendations():
-    ret_text = reccomendations(model_link="model/ContentBasedRecommendation/oldmodel.pt")
-    stringy = {"text": ret_text, "count": 4}
-    global latestRec
-    latestRec = ret_text
-    return json.dumps(stringy)
+   ret_text = reccomendations(model_link="model/ContentBasedRecommendation/oldmodel.pt",Globals= Globals)
+   stringy = {"text" :ret_text , "count": 4}
+
+   return json.dumps(stringy)
 
 
-if __name__ == '__main__':
+'''
+Contains functionality and 
+abstraction of function calls 
+to feed recent topics from the database
+into the topic modeler
+'''
+import time
+
+# Global Value for event callback
+class Globals(object):
+    PROGRESS = 0
+
+# Main routine to begin maintence on topic modeler
+def model_main():
     app.run(port=30009)
+

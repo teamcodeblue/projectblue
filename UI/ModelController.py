@@ -12,10 +12,4 @@ class Globals(object):
 
 # Main routine to begin maintence on topic modeler
 def model_main():
-    # Input model code here
-    x = 0
-    Globals.PROGRESS = x
-    while Globals.PROGRESS < 100:
-        Globals.PROGRESS += 1
-        time.sleep(3)
-
+    time.sleep(5)

@@ -3,6 +3,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.progressbar import ProgressBar
 from kivy.uix.label import Label
 from kivy.core.text import LabelBase
+from kivy.metrics import dp
 
 # Controller dependency
 import ModelController
@@ -21,8 +22,8 @@ class ProgressMeter(Widget):
         # Add Progress Bar
         self.bar = ProgressBar(
             max=1000, 
-            pos=(100, 25),
-            size=(600, 50)
+            pos=(dp(100), dp(25)),
+            size=(dp(600), dp(50))
             )
         self.add_widget(self.bar)
 
@@ -32,7 +33,7 @@ class ProgressMeter(Widget):
             font_name = "ocr-a",
             font_size = 25,
             halign = 'left',
-            pos = (self.bar.center_x - 50, self.bar.y - 50)
+            pos = (self.bar.center_x - dp(50), self.bar.y - dp(50))
         )
         self.add_widget(self.label)
 

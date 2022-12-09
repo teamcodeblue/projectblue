@@ -24,11 +24,15 @@ main{
     background-color:black;
 }
 
-.container {
+.container1 {
     display: flex;
     align-items: center;
 }
-
+.container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+}
 .image{
     padding-bottom:9px;
     padding-top:9px;
@@ -36,7 +40,7 @@ main{
 
 .text{
     font-size: 9px;
-    padding-left:25px;
+    padding-right:50px;
 }
 
 #page-status h2{
@@ -44,7 +48,7 @@ main{
 }
 
 .switch {
-    margin-left: 80px;
+    margin-left: 100px;
 }
 
 .vertical {
@@ -71,12 +75,39 @@ h2 {
     color:green;
 }
 
+#default{
+    color:green;
+    font-size: 20px;
+}
+
+#latest_rec_text{
+    font-size:12px;
+    color: white;
+}
+
+#simple{
+    font-size:12px;
+    color: white;
+}
+
 #rec_text{
     font-size:12px;
     color: white;
 }
 
-p
-{
-    color : white;
+current {
+    justify-content: center;
+}
+
+#current_URL {
+    font-size: 16px;
+    color: white;
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
