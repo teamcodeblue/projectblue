@@ -78,6 +78,8 @@ class MainApp(App):
 
         # Schedule our GPU checks
         Clock.schedule_interval(partial(self.gpu_check), 1)
+
+        # Schedule our project updates
         self.progress_update = Clock.schedule_interval(partial(self.progress_check), .1)
         return RootWidget()
 
