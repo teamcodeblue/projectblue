@@ -24,11 +24,15 @@ main{
     background-color:black;
 }
 
-.container {
+.container1 {
     display: flex;
     align-items: center;
 }
-
+.container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+}
 .image{
     padding-bottom:9px;
     padding-top:9px;
@@ -36,7 +40,7 @@ main{
 
 .text{
     font-size: 9px;
-    padding-left:25px;
+    padding-right:50px;
 }
 
 #page-status h2{
