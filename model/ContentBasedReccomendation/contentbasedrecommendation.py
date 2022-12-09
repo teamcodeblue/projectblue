@@ -36,7 +36,7 @@ class SimpleContentBasedRecommender(FeatureExtractor):
         if target is None:
             target = self.interacted / self.interacted_count
         features = self.extract_features(data)
-        scores = torch.matmul(target, features.T)
+        scores = torch.matmul(target, features.T) / ((target.norm() * features.T.norm())
         return scores
 
 
