@@ -1,25 +1,64 @@
 #:kivy 2.1.0
 
+#:import Factory kivy.factory.Factory
+<SettingPopup@Popup>:
+    title : 'Settings'
+    size_hint : 0.5, 0.95
+    FloatLayout:
+        size_hint : 1, 1
+        Label:
+            id: GPU_limit_desc_label
+            text : 'GPU Usage Limit\n (DEPRECEATED)'
+            halign : 'left'
+            font_name : 'ocr-a'
+            font_size : dp(16)
+            pos : dp(110), dp(80)
+        Slider:
+            id: GPU_Slider
+            min : 0
+            max : 100
+            value : 100
+            step : 1
+            orientation: 'horizontal'
+            pos : dp(400), dp(80)
+            size_hint_x : 0.5
+            on_touch_move: root.limit_changed()
+        Label:
+            id: GPU_limit_value_label
+            text : "100%"
+            halign : 'center'
+            font_name : 'ocr-a'
+            font_size : dp(14)
+            pos: dp(295), dp(60)
+            
 <RootWidget> 
     canvas:
         Color:
             rgba : 40/255, 113/255, 199/255, 1
         
         Rectangle: 
-            pos: 75, 100
-            size: 7.5, 110
+            pos: dp(75), dp(100)
+            size: dp(7.5), dp(110)
         
         Rectangle:
-            pos: 790, 0
-            size: 60, 250
-    
+            pos: dp(790), dp(0)
+            size: dp(60), dp(250)
     CycleLabel:
         id: c_label
     
+    Label:
+        id: gpu_util
+        text: "GPU: 0%"
+        halign: "center"
+        font_name : "ocr-a"
+        font_size: dp(25)
+        pos: dp(550), dp(90)
+    
     Button:
-        pos: 800, 154
-        size: 40, 40
+        pos: dp(800), dp(154)
+        size: dp(40), dp(40)
         background_color: 0,0,0,0
+        on_release: Factory.SettingPopup().open()
         id: settings_button
         Image: 
             source: 'assets/cog.png'
@@ -27,8 +66,8 @@
             center_y: self.parent.center_y
 
     Button:
-        pos: 800, 56
-        size: 40, 40
+        pos: dp(800), dp(56)
+        size: dp(40), dp(40)
         background_color: 0,0,0,0
         on_release: root.status_released()
         id: status_button
@@ -37,5 +76,7 @@
             source: 'assets/play.png'
             center_x: self.parent.center_x
             center_y: self.parent.center_y
+    
     ProgressMeter:
         id: p_bar
+

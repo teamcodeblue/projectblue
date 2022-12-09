@@ -11,6 +11,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
+from kivy.factory import Factory
 
 # Callback/threading Dependencies
 from functools import partial
@@ -19,10 +20,13 @@ import threading
 # Widet Dependencies for main.kv
 from custom_widgets import cycle_label
 from custom_widgets import progress_meter
-
+from custom_widgets import setting_popup
 # Controller dependencies
 from ModelController import Globals
 from ModelController import model_main
+
+# Dependency for grabbing GPU utilization
+import GPUtil
 
 # Specifying size of window
 WINDOW_WIDTH = 850
@@ -68,6 +72,9 @@ class MainApp(App):
 
         # Schedule our UI updates
         self.progress_update = Clock.schedule_interval(partial(self.progress_check), 0)
+
+        # Schedule our GPU checks
+        Clock.schedule_interval(partial(self.gpu_check), 1)
         return RootWidget()
 
     def thread_anim(self, thread, *args):
@@ -82,6 +89,15 @@ class MainApp(App):
     
     def progress_check(self, *args):
         self.root.ids.p_bar.progress_update(Globals.PROGRESS)
+
+    # Update the GPU label using GPUtil
+    def gpu_check(self, *args):
+        GPUs = GPUtil.getGPUs()
+        if len(GPUs) > 0:
+            utilization = round(GPUs[0].load * 100.0, 1)
+            self.root.ids.gpu_util.text = "GPU Load: " + str(utilization) + "%"
+        
+
     
 if __name__ == '__main__':
     MainApp().run()
