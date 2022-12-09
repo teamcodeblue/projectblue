@@ -11,7 +11,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
-from kivy.metrics import dp
+from kivy.metrics import sp
 
 # Callback/threading Dependencies
 from functools import partial
@@ -29,8 +29,8 @@ from ModelController import model_main
 import GPUtil
 
 # Specifying size of window
-WINDOW_WIDTH = dp(850)
-WINDOW_HEIGHT = dp(250)
+WINDOW_WIDTH = sp(850)
+WINDOW_HEIGHT = sp(250)
 
 #test dep
 from model.ContentBasedReccomendation.model_defs import ArticleClassifier

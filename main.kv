@@ -11,8 +11,8 @@
             text : 'GPU Usage Limit\n (DEPRECEATED)'
             halign : 'left'
             font_name : 'ocr-a'
-            font_size : dp(16)
-            pos : dp(110), dp(80)
+            font_size : sp(16)
+            pos : sp(110), sp(80)
         Slider:
             id: GPU_Slider
             min : 0
@@ -20,7 +20,7 @@
             value : 100
             step : 1
             orientation: 'horizontal'
-            pos : dp(400), dp(80)
+            pos : sp(400), sp(80)
             size_hint_x : 0.5
             on_touch_move: root.limit_changed()
         Label:
@@ -28,8 +28,8 @@
             text : "100%"
             halign : 'center'
             font_name : 'ocr-a'
-            font_size : dp(14)
-            pos: dp(295), dp(60)
+            font_size : sp(14)
+            pos: sp(295), sp(60)
             
 <RootWidget> 
     canvas:
@@ -37,12 +37,12 @@
             rgba : 40/255, 113/255, 199/255, 1
         
         Rectangle: 
-            pos: dp(75), dp(100)
-            size: dp(7.5), dp(110)
+            pos: sp(75), sp(100)
+            size: sp(7.5), sp(110)
         
         Rectangle:
-            pos: dp(790), dp(0)
-            size: dp(60), dp(250)
+            pos: sp(790), sp(0)
+            size: sp(60), sp(250)
     CycleLabel:
         id: c_label
     
@@ -51,12 +51,12 @@
         text: "GPU: 0%"
         halign: "center"
         font_name : "ocr-a"
-        font_size: dp(25)
-        pos: dp(550), dp(90)
+        font_size: sp(25)
+        pos: sp(550), sp(90)
     
     Button:
-        pos: dp(800), dp(154)
-        size: dp(40), dp(40)
+        pos: sp(800), sp(154)
+        size: sp(40), sp(40)
         background_color: 0,0,0,0
         on_release: Factory.SettingPopup().open()
         id: settings_button
@@ -66,8 +66,8 @@
             center_y: self.parent.center_y
 
     Button:
-        pos: dp(800), dp(56)
-        size: dp(40), dp(40)
+        pos: sp(800), sp(56)
+        size: sp(40), sp(40)
         background_color: 0,0,0,0
         on_release: root.status_released()
         id: status_button
