@@ -4,6 +4,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.core.text import LabelBase
 from kivy.app import App
 from kivy.animation import Animation
+from kivy.metrics import dp
 
 # Register the font family name
 LabelBase.register("o-sans", fn_regular='assets/OdibeeSans-Regular.ttf')
@@ -27,14 +28,14 @@ class CycleLabel(FloatLayout):
         ).__init__(**kwargs)
 
         # Manage layout
-        self.size = (450,90)
-        self.pos = (100,110)
+        self.size = (dp(450),dp(90))
+        self.pos = (dp(100),dp(110))
         # Initialize label
         self.anim_label = Label(
             text = self.phrases[0],
             font_name = "o-sans",
             halign="left",
-            font_size = 70,
+            font_size = dp(70),
             pos = self.pos
         )
         self.anim_label.text_size = self.size
