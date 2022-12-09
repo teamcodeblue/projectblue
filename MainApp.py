@@ -32,6 +32,9 @@ import GPUtil
 WINDOW_WIDTH = 850
 WINDOW_HEIGHT = 250
 
+#test dep
+from model.ContentBasedReccomendation.model_defs import ArticleClassifier
+
 
 # Root widget of application (will be parent of all others (container))
 class RootWidget(Widget):
@@ -75,6 +78,7 @@ class MainApp(App):
 
         # Schedule our GPU checks
         Clock.schedule_interval(partial(self.gpu_check), 1)
+        self.progress_update = Clock.schedule_interval(partial(self.progress_check), .1)
         return RootWidget()
 
     def thread_anim(self, thread, *args):
